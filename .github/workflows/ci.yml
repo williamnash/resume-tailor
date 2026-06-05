@@ -50,7 +50,8 @@ jobs:
           python-version: "3.12"
 
       - name: Validate companies.json
-        run: python -c "import json; json.load(open('tailored/companies.json')); print('companies.json: valid JSON')"
+        run: |
+          python -c "import json; json.load(open('tailored/companies.json')); print('companies.json OK')"
 
       - name: jobs.py compiles and runs
         run: |
