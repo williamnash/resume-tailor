@@ -56,9 +56,9 @@ trap 'rm -f "${APP_DIR}/resume.cls" "${APP_DIR}"/*.aux "${APP_DIR}"/*.log "${APP
 
 cd "$APP_DIR"
 
-# Build resume
+# Build resume (engine produces resume.pdf; rename only if the target differs)
 build_pdf resume.tex
-mv resume.pdf "${PREFIX}.pdf"
+[ "${PREFIX}.pdf" = "resume.pdf" ] || mv resume.pdf "${PREFIX}.pdf"
 echo "Built: tailored/${1}/${PREFIX}.pdf"
 
 # Build cover letter if it exists
