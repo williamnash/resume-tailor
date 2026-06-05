@@ -17,20 +17,49 @@ facts.
   accomplishments, never fabricating new ones.
 - **`check.sh`** keeps the resume and the source of truth in sync.
 
+### Why two files (and what a "slug" is)
+
+The resume is the *presentation*; `accomplishments.md` is the *facts*. Keeping
+them separate means you write each fact once, and every tailored copy you ever
+generate draws from that one vetted source — so a number can't drift or get
+exaggerated across a dozen applications. The `% id: <slug>` comment is just a
+short label (e.g. `northwind-pipeline`) that ties a resume bullet to the entry
+it came from, so `check.sh` can confirm nothing on the resume is unsupported.
+You rarely write these by hand — Claude wires them up for you (see Setup).
+
 ## Setup
 
-1. **Install a LaTeX distribution** (provides `pdflatex`):
-   - macOS: `brew install --cask mactex-no-gui` (or BasicTeX)
-   - Debian/Ubuntu: `sudo apt-get install texlive-latex-base texlive-latex-extra`
-2. **Make the scripts executable:** `chmod +x make.sh check.sh tailored/make.sh`
-3. **Build the example** to confirm LaTeX works: `./make.sh` → produces `resume-<date>.pdf`.
-4. **Replace the example content with your own:**
-   - Edit `document.tex`: your name, contact line, jobs, education, skills.
-   - Edit `accomplishments.md`: one entry per fact/bullet, matching the
-     `% id:` slugs you use in `document.tex`.
-   - Keep `% id:` comments and slug IDs consistent between the two files.
-5. **Run `./check.sh`** — it flags any bullet whose ID has no entry, and (if you
-   keep `check-numbers.txt`) checks that load-bearing numbers stay in sync.
+**Prerequisite — install a LaTeX distribution** (provides `pdflatex`):
+- macOS: `brew install --cask mactex-no-gui` (or the smaller BasicTeX)
+- Debian/Ubuntu: `sudo apt-get install texlive-latex-base texlive-latex-extra`
+
+This is a one-time, multi-GB install. If `./make.sh` later prints
+`pdflatex: command not found`, this step is missing — the repo isn't broken. No
+appetite for a local LaTeX install? You can paste `document.tex` + `resume.cls`
+into [Overleaf](https://www.overleaf.com) and compile in the browser.
+
+Confirm it works by building the example: `./make.sh` → produces
+`resume-<date>.pdf` (one page).
+
+**Then make it yours — the fast way (recommended):**
+
+Open Claude Code in this repo and hand it your existing material:
+
+> Here is my current resume / LinkedIn: \<paste text or attach a file\>.
+> Replace the example content in `document.tex` and `accomplishments.md` with
+> mine, keeping the `% id:` slugs in sync, and keep it to one page.
+
+Claude populates both files together, matched IDs and all. Then run `./check.sh`
+to confirm they're in sync.
+
+**Or edit by hand (fallback):**
+- Edit `document.tex`: your name, contact line, jobs, education, skills.
+- Edit `accomplishments.md`: one entry per fact/bullet, matching the `% id:`
+  slugs you use in `document.tex`.
+- Replace **all** of the example content (the fictional "Jordan Rivera") so you
+  never accidentally send an example resume.
+- Run `./check.sh` — it flags any bullet whose ID has no entry, and (if you keep
+  `check-numbers.txt`) checks that load-bearing numbers stay in sync.
 
 Tip: set `RESUME_PREFIX` to your name so output files are nicely named when you
 send them, e.g. `RESUME_PREFIX=jrivera ./make.sh` → `jrivera-2026-06-05.pdf`.
@@ -48,12 +77,13 @@ The full pipeline and rules are in `CLAUDE.md`.
 ## Finding open roles (optional)
 
 `tailored/jobs.py` polls Greenhouse, Lever, Ashby, and Workable job boards for
-companies you list in `tailored/companies.json`.
+companies you list in `tailored/companies.json`. Requires Python 3.10+ (no
+third-party packages — standard library only).
 
 ```bash
-python tailored/jobs.py            # filtered by your companies.json "filters"
-python tailored/jobs.py --all      # every role, no filters
-python tailored/jobs.py --new      # only roles unseen since last run
+python3 tailored/jobs.py            # filtered by your companies.json "filters"
+python3 tailored/jobs.py --all      # every role, no filters
+python3 tailored/jobs.py --new      # only roles unseen since last run
 ```
 
 Edit `tailored/companies.json` to set your target companies and your

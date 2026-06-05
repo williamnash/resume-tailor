@@ -9,7 +9,30 @@ into a self-contained directory under `tailored/`.
 
 > **First-time setup:** see `README.md`. Replace the example content in
 > `document.tex` and `accomplishments.md` with your own, then this pipeline
-> works for you.
+> works for you. If the user hasn't done this yet, run the bootstrap below.
+
+## First-run bootstrap (new user)
+
+If `document.tex`/`accomplishments.md` still contain the example persona
+("Jordan Rivera") and the user gives you their existing resume, LinkedIn, or a
+description of their experience, populate both files for them:
+
+1. Extract each distinct accomplishment/bullet and create an entry in
+   `accomplishments.md`: a stable kebab-case slug ID (e.g. `acme-payments`),
+   a **Tags** line, a **Facts** list (the raw, verifiable facts), and a
+   **Resume phrasing** line (the polished bullet text). Group entries by
+   employer with a heading per job.
+2. Build `document.tex` from those entries: summary, one `rSubsection` per job
+   with its bullets, education, a skills table, and awards. Put a
+   `% id: <slug>` comment directly above every bullet, education entry, skills
+   row, and award, matching the slug in `accomplishments.md`.
+3. Replace **all** example content — name, contact line, every "Jordan Rivera"
+   bullet. Leave nothing fictional behind.
+4. Keep it to **one page**. Comment out lower-priority sections if needed.
+5. **Do not invent facts.** If the source material is thin or ambiguous, ask the
+   user rather than filling gaps. Only record what they actually told you.
+6. Optionally update `check-numbers.txt` with the new load-bearing numbers, then
+   run `./check.sh` and `./make.sh` to confirm everything is in sync and builds.
 
 ## Source of truth: `accomplishments.md`
 
