@@ -1,0 +1,2 @@
+# Tailored applications go here, one directory per job:
+#   tailored/<company>/<YYYY-MM>/<role>/{resume.tex,cover.tex,notes.md}

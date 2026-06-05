@@ -1,0 +1,93 @@
+\documentclass{resume}
+\usepackage{hyperref}
+
+% ============================================================================
+% EXAMPLE RESUME — replace everything below with your own details.
+% This is the "master" resume. Tailored copies live under tailored/.
+% Every bullet carries a "% id: <slug>" comment that links back to an entry
+% in accomplishments.md (your single source of truth for facts).
+% ============================================================================
+
+\name{Jordan Rivera}
+\address{(555) 123-4567 \\ jordan.rivera@example.com \\ \href{https://example.com}{example.com} \\ \href{https://www.linkedin.com/in/jordanrivera/}{linkedin.com/in/jordanrivera} \\ \href{https://github.com/jordanrivera}{github.com/jordanrivera}}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%   SUMMARY
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Summary}
+Backend engineer with 8+ years building distributed data systems --- from high-throughput payment pipelines to real-time analytics serving millions of users. Comfortable owning a service end to end, from schema design to on-call.
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%   PROFESSIONAL EXPERIENCE
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Professional Experience}
+
+\begin{rSubsection}{Northwind Data}{Jan 2021 - Present}{Software Engineer $\rightarrow$ Senior Software Engineer}{Remote}
+    % id: northwind-pipeline
+    \item Designed and own a streaming ingestion pipeline processing 2B+ events/day with sub-second p99 latency on Kafka and Flink.
+    % id: northwind-cost
+    \item Cut data-warehouse compute spend 40\% by repartitioning hot tables and rewriting the nightly aggregation jobs.
+    % id: northwind-oncall
+    \item Led migration of 12 services to a unified observability stack, reducing mean time to resolution from hours to minutes.
+\end{rSubsection}
+
+\begin{rSubsection}{Acme Software}{Jun 2017 - Dec 2020}{Software Engineer}{Austin, TX}
+    % id: acme-api
+    \item Built a public REST/GraphQL API used by 300+ partner integrations, with versioning and backward-compatibility guarantees.
+    % id: acme-payments
+    \item Implemented idempotent payment-reconciliation jobs handling \$50M/month with zero double-charges in production.
+\end{rSubsection}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%   EDUCATION
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Education}
+
+% id: edu-state
+{\bf State University}, City, ST \hfill {\em May 2017} \\
+BS in Computer Science
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%   TECHNICAL SKILLS
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Technical Skills}
+
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{4ex}} l }
+% id: skills-languages
+Languages & Go, Python, TypeScript, SQL \\
+% id: skills-data
+Data & Kafka, Flink, Postgres, Snowflake, dbt, Airflow \\
+% id: skills-infra
+Infra & AWS, Kubernetes, Terraform, Docker, Prometheus, Grafana \\
+\end{tabular}
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%   AWARDS (optional — keep, trim, or remove)
+%----------------------------------------------------------------------------------------
+\begin{rSection}{Awards}
+
+% id: award-hackathon
+Company-wide Hackathon, 1st place (real-time fraud-detection prototype) \hfill 2022
+
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%   LEADERSHIP & COMMUNITY (commented out — uncomment for roles that value it)
+%----------------------------------------------------------------------------------------
+%\begin{rSection}{Leadership \& Community}
+%\begin{tabular}{ @{} >{\bfseries}l @{\hspace{4ex}} l }
+%Mentorship & Mentored three junior engineers through onboarding and first on-call rotations \\
+%Hiring & Designed and ran the backend technical interview loop \\
+%\end{tabular}
+%\end{rSection}
+
+\end{document}

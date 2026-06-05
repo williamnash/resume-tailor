@@ -1,0 +1,8 @@
+# Load-bearing numbers to keep in sync between document.tex and accomplishments.md.
+# One per line. Lines starting with # are ignored.
+# check.sh verifies: if the number appears in document.tex, the fact behind it
+# must also appear in accomplishments.md.
+2B+
+40\%
+300+
+\$50M

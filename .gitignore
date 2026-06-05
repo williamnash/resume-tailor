@@ -1,0 +1,16 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# Compiled PDFs (resumes/cover letters)
+*.pdf
+
+# jobs.py seen-cache
+tailored/.jobs_seen.json
+
+# OS cruft
+.DS_Store
