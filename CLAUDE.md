@@ -193,6 +193,11 @@ The `notes.md` in each application directory captures:
 
 ## Build
 
+The build scripts auto-detect the LaTeX engine, preferring `tectonic` and
+falling back to `pdflatex`. If neither is installed, run `./setup.sh`. CI
+(`.github/workflows/ci.yml`) builds the example and runs the checks below on
+every push.
+
 **Master resume:** `./make.sh` — compiles `document.tex`, outputs `resume-YYYY-MM-DD.pdf` (set `RESUME_PREFIX` to change the filename prefix).
 
 **Tailored resume:** `./tailored/make.sh [company]/[date]/[role]` — compiles `resume.tex` and `cover.tex` (if present), outputting `resume.pdf` and `resume-cover.pdf` alongside the source (or `<prefix>.pdf` / `<prefix>-cover.pdf` if `RESUME_PREFIX` is set).

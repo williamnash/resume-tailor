@@ -1,9 +1,29 @@
 # Resume Tailor
 
+[![ci](https://github.com/williamnash/resume-tailor/actions/workflows/ci.yml/badge.svg)](https://github.com/williamnash/resume-tailor/actions/workflows/ci.yml)
+
 A LaTeX resume system designed to be driven by [Claude Code](https://claude.com/claude-code).
 You keep your facts in one place, and Claude tailors your resume and writes a
 cover letter for each job description you give it — without ever inventing
 facts.
+
+> **Using this for yourself?** Click **"Use this template" → Create a new
+> repository**, and make your copy **Private** — it will hold your real career
+> history. This source repo is public; your filled-in copy should not be.
+
+## Quick start
+
+Pick whichever is least effort for you:
+
+- **Zero install (browser):** open the repo in **GitHub Codespaces**
+  (green *Code* button → *Codespaces* → *Create*). The dev container builds the
+  example resume automatically; you can edit and rebuild entirely in the browser.
+- **One command (local):** `./setup.sh` — installs a LaTeX engine if you don't
+  have one and builds the example to confirm it works.
+- **Manual:** see [Setup](#setup) below.
+
+Then make it yours: open Claude Code and paste your existing resume (see
+[Setup](#setup)).
 
 ## How it works
 
@@ -29,17 +49,23 @@ You rarely write these by hand — Claude wires them up for you (see Setup).
 
 ## Setup
 
-**Prerequisite — install a LaTeX distribution** (provides `pdflatex`):
-- macOS: `brew install --cask mactex-no-gui` (or the smaller BasicTeX)
-- Debian/Ubuntu: `sudo apt-get install texlive-latex-base texlive-latex-extra`
+**Get a LaTeX engine.** The build scripts use whichever is installed, preferring
+[Tectonic](https://tectonic-typesetting.github.io/) — a single self-contained
+binary that downloads only the packages it needs (no multi-GB install).
 
-This is a one-time, multi-GB install. If `./make.sh` later prints
-`pdflatex: command not found`, this step is missing — the repo isn't broken. No
-appetite for a local LaTeX install? You can paste `document.tex` + `resume.cls`
-into [Overleaf](https://www.overleaf.com) and compile in the browser.
+- **Easiest:** run `./setup.sh`. It installs Tectonic if you don't have it
+  (via Homebrew on macOS, or the official installer elsewhere), checks Python,
+  and builds the example.
+- **Manual install of Tectonic:** macOS `brew install tectonic`; other platforms
+  see the [install guide](https://tectonic-typesetting.github.io/book/latest/installation/).
+- **Already have TeX Live / MacTeX?** That works too — the scripts fall back to
+  `pdflatex` automatically.
+- **No install at all:** use GitHub Codespaces (see [Quick start](#quick-start)),
+  or paste `document.tex` + `resume.cls` into [Overleaf](https://www.overleaf.com).
 
-Confirm it works by building the example: `./make.sh` → produces
-`resume-<date>.pdf` (one page).
+If `./make.sh` prints `no LaTeX engine found`, this step is missing — the repo
+isn't broken; run `./setup.sh`. Confirm it works by building the example:
+`./make.sh` → produces `resume-<date>.pdf` (one page).
 
 **Then make it yours — the fast way (recommended):**
 
@@ -96,10 +122,13 @@ can run it immediately.)
 document.tex          master resume (replace with yours)
 accomplishments.md    single source of truth for facts
 resume.cls            LaTeX class (styling)
+setup.sh              one-command install + build
 make.sh               build the master resume
 check.sh              verify resume <-> accomplishments sync
 check-numbers.txt     optional load-bearing numbers for check.sh
 CLAUDE.md             pipeline instructions for Claude Code
+.devcontainer/        GitHub Codespaces config (zero-install)
+.github/workflows/    CI: build + lint + validate on every push
 tailored/
   make.sh             build a tailored resume + cover letter
   jobs.py             poll ATS job boards
@@ -115,6 +144,13 @@ and links.
 
 ## Privacy
 
-This repo is meant to hold your real career history and job applications. If you
-fork it, keep your fork **private**. PDFs, LaTeX build artifacts, and the
-`jobs.py` seen-cache are git-ignored by default.
+This template repo is public, but **your copy will hold your real career history
+and job applications** — so create it with **"Use this template" and set it to
+Private**. Don't push your filled-in resume to a public repo. PDFs, LaTeX build
+artifacts, and the `jobs.py` seen-cache are git-ignored by default, but the
+LaTeX/markdown *sources* (which contain your details) are tracked — that's the
+point, just keep the repo private.
+
+## License
+
+MIT — see [LICENSE](LICENSE).

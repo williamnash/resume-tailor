@@ -1,0 +1,61 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build resume (tectonic)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tectonic
+        run: |
+          curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net | sh
+          sudo mv tectonic /usr/local/bin/
+          tectonic --version
+
+      - name: Verify resume <-> accomplishments sync
+        run: ./check.sh
+
+      - name: Build master resume
+        run: ./make.sh
+
+      - name: Build tailored example
+        run: |
+          mkdir -p tailored/acme/2026-06/backend-eng
+          cp document.tex tailored/acme/2026-06/backend-eng/resume.tex
+          ./tailored/make.sh acme/2026-06/backend-eng
+
+      - name: Upload built resume PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: example-resume
+          path: resume-*.pdf
+          if-no-files-found: error
+
+  checks:
+    name: Lint & validate tooling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate companies.json
+        run: python -c "import json; json.load(open('tailored/companies.json')); print('companies.json: valid JSON')"
+
+      - name: jobs.py compiles and runs
+        run: |
+          python -m py_compile tailored/jobs.py
+          python tailored/jobs.py --help
+
+      - name: Shellcheck scripts
+        run: shellcheck --severity=warning make.sh check.sh setup.sh tailored/make.sh

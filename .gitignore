@@ -12,5 +12,9 @@
 # jobs.py seen-cache
 tailored/.jobs_seen.json
 
+# Python bytecode
+__pycache__/
+*.pyc
+
 # OS cruft
 .DS_Store
